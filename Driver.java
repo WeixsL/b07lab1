@@ -1,16 +1,35 @@
+import java.io.*;
+
 public class Driver {
-    public static void main(String [] args) {
-        Polynomial p = new Polynomial();
-        System.out.println(p.evaluate(3));
-        double [] c1 = {6,0,0,5};
-        Polynomial p1 = new Polynomial(c1);
-        double [] c2 = {0,-2,0,0,-9};
-        Polynomial p2 = new Polynomial(c2);
-        Polynomial s = p1.add(p2);
-        System.out.println("s(0.1) = " + s.evaluate(0.1));
-        if(s.hasRoot(1))
-            System.out.println("1 is a root of s");
-        else
-            System.out.println("1 is not a root of s");
+    public Driver() {
+    }
+    public static void main(String[] args) {
+        double[] c1 = {5,3,7};
+        int[] e1 = {0, 2, 8};
+        double[] c2 = {3,2};
+        int[] e2 = {2,5};
+        Polynomial poly1 = new Polynomial(c1, e1);
+        Polynomial poly2 = new Polynomial(c2, e2);
+
+
+        System.out.println("Poly1: " + poly1);
+        System.out.println("Poly2: " + poly2);
+
+        double result = poly1.evaluate(2);
+        System.out.println("Poly1 evaluated at x=2: " + result);
+
+        boolean hasRoot = poly1.hasRoot(1);
+        System.out.println("Poly1 has root at x=1: " + hasRoot);
+
+        Polynomial product = poly1.multiply(poly2);
+        System.out.println("Product: " + product);
+
+        try {
+            poly1.saveToFile("poly1.txt");
+            Polynomial loadedPoly1 = new Polynomial(new File("poly1.txt"));
+            System.out.println("Loaded Poly1: " + loadedPoly1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
